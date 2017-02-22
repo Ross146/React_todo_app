@@ -26,4 +26,36 @@ describe('Reducers', () => {
             expect(res).toEqual(true);
         });
     });
+
+    describe('todosReducer', () => {
+        it('should add new todo', () => {
+            var action = {
+                type: 'ADD_TODO',
+                text: 'test text todo'
+            };
+            var res = reducers.todosReducer(df([]), df(action));
+
+            expect(res.length).toEqual(1);
+            expect(res[0].text).toEqual(action.text);
+        });
+
+        it('should toggle todo by id', () => {
+            var todos = [{
+                id: 123,
+                text: 'text',
+                completed: true,
+                createdAt: 123,
+                completedAt: 125
+            }];
+
+            var action = {
+                type: 'TOGGLE_TODO',
+                id: todos[0].id
+            };
+
+            var res = reducers.todosReducer(df(todos), df(action));
+
+            expect(res[0].id).toEqual(false);
+        })
+    })
 });
