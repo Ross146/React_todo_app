@@ -53,9 +53,10 @@ describe('Reducers', () => {
                 id: todos[0].id
             };
 
-            var res = reducers.todosReducer(df(todos), df(action));
+            var res = reducers.todosReducer(todos, action);
 
-            expect(res[0].id).toEqual(false);
+            expect(res[0].completed).toEqual(false);
+            expect(res[0].completedAt).toEqual(undefined);
         })
     })
 });
