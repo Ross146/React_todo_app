@@ -1,29 +1,32 @@
-var expect = require('expect');
-var actions = require('actions');
+let expect = require('expect');
+let actions = require('actions');
 
 describe('Actions', () => {
     it('should generate search text action', () => {
-        var action = {
+        let action = {
             type: 'SET_SEARCH_TEXT',
             searchText: 'Some search text'
         };
-        var res = actions.setSearchText(action.searchText);
+        let res = actions.setSearchText(action.searchText);
 
         expect(res).toEqual(action);
     });
 
     it('should generate add todo action', () => {
-        var action = {
+        let action = {
             type: 'ADD_TODO',
-            text: 'Thing to do'
+            todo: {
+                text: 'Thing to do',
+                priority: 2
+            }
         };
-        var res = actions.addTodo(action.text);
+        let res = actions.addTodo(action.todo.text, action.todo.priority);
 
         expect(res).toEqual(action);
     });
 
     it('should generate add todos action', () => {
-        var action = {
+        let action = {
             type: 'ADD_TODOS',
             todos: [{
                 id: 111,
@@ -33,26 +36,26 @@ describe('Actions', () => {
                 createdAt: 33000
             }]
         };
-        var res = actions.addTodos(action.todos);
+        let res = actions.addTodos(action.todos);
 
         expect(res).toEqual(action);
     });
 
     it('should generate toggle show completed action', () => {
-        var action = {
+        let action = {
             type: 'TOGGLE_SHOW_COMPLETED'
         };
-        var res = actions.toggleShowCompleted();
+        let res = actions.toggleShowCompleted();
 
         expect(res).toEqual(action);
     });
 
     it('should generate toggle todo action', () => {
-        var action = {
+        let action = {
             type: 'TOGGLE_TODO',
             id: '123'
         };
-        var res = actions.toggleTodo(action.id);
+        let res = actions.toggleTodo(action.id);
 
         expect(res).toEqual(action);
     });

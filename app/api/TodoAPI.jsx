@@ -6,8 +6,8 @@ module .exports = {
         }
     },
     getTodos: function () {
-        var stringTodos = localStorage.getItem('todos');
-        var todos = [];
+        let stringTodos = localStorage.getItem('todos');
+        let todos = [];
 
         try {
             todos = JSON.parse(stringTodos);
@@ -17,31 +17,57 @@ module .exports = {
 
         return $.isArray(todos) ? todos : [];
     },
-    filterTodos: function (todos, showCompleted, searchText) {
-        var filteredTodos = todos;
+    filterSortTodos: function (todos, showCompleted, searchText, sort) {
+        let filteredSortedTodos = todos;
 
         // Filter by showCompleted
-        filteredTodos = filteredTodos.filter((todo) => {
+        filteredSortedTodos = filteredSortedTodos.filter((todo) => {
             return !todo.completed || showCompleted;
         });
 
         //Filter by searchText
-        filteredTodos = filteredTodos.filter((todo) => {
-            var text = todo.text.toLowerCase();
+        filteredSortedTodos = filteredSortedTodos.filter((todo) => {
+            let text = todo.text.toLowerCase();
             return searchText.length === 0 || text.indexOf(searchText) > -1;
         });
 
-        //Sort todos with non-completed first
-        filteredTodos.sort((a, b) => {
-            if (!a.completed && b.completed) {
-                return -1;
-            } else if (a.completed && !b.completed) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
+        if (sort === 1) {
+            filteredSortedTodos.sort((a, b) => {
+                if (a.createdAt > b.createdAt) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        } else if (sort === 2) {
+            filteredSortedTodos.sort((a, b) => {
+                if (a.text > b.text) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        } else if (sort === 3) {
+            filteredSortedTodos.sort((a, b) => {
+                if (a.priority > b.priority) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        } else if (sort === 4) {
+            filteredSortedTodos.sort((a, b) => {
+                if (!a.completed && b.completed) {
+                    return -1;
+                } else if (a.completed && !b.completed) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        }
 
-        return  filteredTodos;
+
+        return  filteredSortedTodos;
     }
 };

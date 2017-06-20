@@ -1,15 +1,19 @@
-var React = require('react');
-var {connect} = require('react-redux');
-var actions = require('actions');
+let React = require('react');
+let {connect} = require('react-redux');
+let actions = require('actions');
 
-export  var TodoSearch = React.createClass({
+export  let TodoSearch = React.createClass({
     render: function () {
-        var {dispatch, showCompleted, searchText} = this.props;
+        let {dispatch, showCompleted, searchText, sort} = this.props;
+
+        let setSort = (event) => {
+            dispatch(actions.changeSort(+event.target.value))
+        };
         return (
             <div className="container__header">
                 <div>
                     <input type="search" ref="searchText" placeholder="Search todos" value={searchText} onChange={() => {
-                    var searchText = this.refs.searchText.value;
+                    let searchText = this.refs.searchText.value;
                     dispatch(actions.setSearchText(searchText));
                     }}/>
                 </div>
@@ -20,6 +24,24 @@ export  var TodoSearch = React.createClass({
                         }}/>
                         Show Completed todos
                     </label>
+                    <div onChange={setSort.bind(this)}>
+                        <label>
+                            <input type="radio" name="filter" value="1" checked={sort === 1}/>
+                            Filter by created
+                        </label>
+                        <label>
+                            <input type="radio" name="filter" value="2" checked={sort === 2}/>
+                            Filter by name
+                        </label>
+                        <label>
+                            <input type="radio" name="filter" value="3" checked={sort === 3}/>
+                            Filter by priority
+                        </label>
+                        <label>
+                            <input type="radio" name="filter" value="4" checked={sort === 4}/>
+                            Filter by completed
+                        </label>
+                    </div>
                 </div>
             </div>
         )
@@ -30,7 +52,8 @@ export default connect(
     (state) => {
         return {
             showCompleted: state.showCompleted,
-            searchText: state.searchText
+            searchText: state.searchText,
+            sort: state.sort
         }
     }
 )(TodoSearch);

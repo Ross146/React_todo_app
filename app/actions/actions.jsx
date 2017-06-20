@@ -1,31 +1,41 @@
-export var setSearchText = (searchText) => {
+export let setSearchText = (searchText) => {
     return {
         type: 'SET_SEARCH_TEXT',
         searchText
     };
 };
 
-export var addTodo = (text) => {
+export let changeSort = (sort) => {
     return {
-        type: 'ADD_TODO',
-        text
+        type: 'CHANGE_SORT',
+        sort
     }
 };
 
-export var addTodos = (todos) => {
+export let addTodo = (text, priority) => {
+    return {
+        type: 'ADD_TODO',
+        todo: {
+            text,
+            priority
+        },
+    }
+};
+
+export let addTodos = (todos) => {
     return {
         type: 'ADD_TODOS',
         todos
     }
 };
 
-export  var toggleShowCompleted = () => {
+export  let toggleShowCompleted = () => {
     return {
         type: 'TOGGLE_SHOW_COMPLETED'
     }
 };
 
-export  var toggleTodo = (id) => {
+export  let toggleTodo = (id) => {
     return {
         type: 'TOGGLE_TODO',
         id
