@@ -13,7 +13,7 @@ export let searchTextReducer = (state = '', action) => {
 export let sortReducer = (state = 1, action) => {
     switch (action.type) {
         case 'CHANGE_SORT':
-            return action.sort;
+            return (state !== action) ? action.sort : state;
         default:
             return state;
     }

@@ -27,6 +27,19 @@ describe('Reducers', () => {
         });
     });
 
+    describe('sortReducer', () => {
+        it('should change sort type', () => {
+            let action = {
+                type: 'CHANGE_SORT',
+                sort: 2
+            };
+
+            let res = reducers.sortReducer(df(1), df(action));
+
+            expect(res).toEqual(action.sort);
+        })
+    });
+
     describe('todosReducer', () => {
         it('should add new todo', () => {
             let action = {
