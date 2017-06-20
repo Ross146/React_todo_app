@@ -7,7 +7,7 @@ export let AddTodo = React.createClass({
         e.preventDefault();
         let {dispatch} = this.props;
         let todoText = this.refs.todoText.value;
-        let todoPriority = this.refs.todoPriority.value;
+        let todoPriority = +this.refs.todoPriority.value;
 
         if(todoText.length > 0) {
             this.refs.todoText.value = '';

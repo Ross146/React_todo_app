@@ -13,7 +13,7 @@ describe('AddTodo component', () => {
 
     it('should dispatch ADD_TODO with valid text and priority', () => {
         let todoText = 'Check mail';
-        let todoPriority = "2";
+        let todoPriority = 2;
         let action = {
             type: 'ADD_TODO',
             todo: {

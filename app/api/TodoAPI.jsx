@@ -49,7 +49,8 @@ module .exports = {
             });
         } else if (sort === 3) {
             filteredSortedTodos.sort((a, b) => {
-                if (a.priority > b.priority) {
+                console.log(a.priority, b.priority);
+                if (a.priority < b.priority) {
                     return 1;
                 } else {
                     return -1;

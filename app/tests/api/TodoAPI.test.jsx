@@ -57,14 +57,20 @@ describe('TodoAPI', () => {
         let todos = [{
             id: 1,
             text: 'some text 1',
+            priority: 1,
+            createdAt: 2,
             completed: true
         },{
             id: 2,
             text: 'some text 2',
+            priority: 2,
+            createdAt: 1,
             completed: false
         },{
             id: 3,
             text: 'text 3',
+            priority: 3,
+            createdAt: 3,
             completed: true
         }];
 
@@ -78,10 +84,25 @@ describe('TodoAPI', () => {
             expect(filteredTodos.length).toBe(1);
         });
 
-        // it('should sort by completed status', () => {
-        //     let filterSortTodos = TodoAPI.filterSortTodos(todos, true, '');
-        //     expect(filterSortTodos[0].completed).toBe(false);
-        // });
+        it('should sort by created at', () => {
+            let filterSortTodos = TodoAPI.filterSortTodos(todos, true, '', 1);
+            expect(filterSortTodos[0].createdAt).toBe(1);
+        });
+
+        it('should sort by name', () => {
+            let filterSortTodos = TodoAPI.filterSortTodos(todos, true, '', 2);
+            expect(filterSortTodos[0].text).toBe('some text 1');
+        });
+
+        it('should sort by priority', () => {
+            let filterSortTodos = TodoAPI.filterSortTodos(todos, true, '', 3);
+            expect(filterSortTodos[0].priority).toBe(3);
+        });
+
+        it('should sort by completed status', () => {
+            let filterSortTodos = TodoAPI.filterSortTodos(todos, true, '', 4);
+            expect(filterSortTodos[0].completed).toBe(false);
+        });
 
         it('should filter todos by searchText', () => {
             let filteredTodos = TodoAPI.filterSortTodos(todos, true, 'some');
