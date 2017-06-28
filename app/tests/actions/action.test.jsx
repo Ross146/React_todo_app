@@ -16,11 +16,14 @@ describe('Actions', () => {
         let action = {
             type: 'ADD_TODO',
             todo: {
+                id: '1231415f',
                 text: 'Thing to do',
-                priority: 2
+                priority: 2,
+                completed: false,
+                createdAt: 0
             }
         };
-        let res = actions.addTodo(action.todo.text, action.todo.priority);
+        let res = actions.addTodo(action.todo);
 
         expect(res).toEqual(action);
     });

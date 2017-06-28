@@ -34,14 +34,7 @@ export let todosReducer = (state = [], action) => {
         case 'ADD_TODO':
             return [
                 ...state,
-                {
-                    id: uuid(),
-                    text: action.todo.text,
-                    priority: action.todo.priority,
-                    completed: false,
-                    createdAt: moment().unix(),
-                    completedAt: undefined
-                }
+                action.todo
             ];
         case 'TOGGLE_TODO':
             return state.map((todo) => {

@@ -45,6 +45,9 @@ describe('Reducers', () => {
             let action = {
                 type: 'ADD_TODO',
                 todo: {
+                    id: '13423',
+                    completedAt: 12423,
+                    completed: false,
                     text: 'test text todo',
                     priority: 2
                 }
@@ -52,7 +55,7 @@ describe('Reducers', () => {
             let res = reducers.todosReducer(df([]), df(action));
 
             expect(res.length).toEqual(1);
-            expect(res[0].text).toEqual(action.todo.text);
+            expect(res[0]).toEqual(action.todo);
         });
 
         it('should toggle todo by id', () => {

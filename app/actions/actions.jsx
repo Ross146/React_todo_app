@@ -1,3 +1,7 @@
+import moment from 'moment';
+
+import firebase, {firebaseRef} from 'app/firebase'
+
 export let setSearchText = (searchText) => {
     return {
         type: 'SET_SEARCH_TEXT',
@@ -12,13 +16,31 @@ export let changeSort = (sort) => {
     }
 };
 
-export let addTodo = (text, priority) => {
+export let addTodo = (todo) => {
     return {
         type: 'ADD_TODO',
-        todo: {
+        todo
+    }
+};
+
+export  let startAddTodo = (text, priority) => {
+    return (dispatch, getState) => {
+        let todo = {
             text,
-            priority
-        },
+            priority,
+            completed: false,
+            createdAt: moment().unix(),
+            completedAt: null
+        };
+
+        let todoRef = firebaseRef.child('todos').push(todo);
+
+        return todoRef.then(() => {
+            dispatch(addTodo({
+                ...todo,
+                id: todoRef.key
+            }))
+        })
     }
 };
 
