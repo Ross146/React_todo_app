@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 let expect = require('expect');
 
+import firebase, {firebaseRef} from 'app/firebase';
 let actions = require('actions');
 
 let createMockStore = configureMockStore([thunk]);
@@ -86,4 +87,45 @@ describe('Actions', () => {
 
         expect(res).toEqual(action);
     });
+
+
+    describe('Tests with firebase todos', () => {
+        var testTodoRef;
+
+        beforeEach((done) => {
+            testTodoRef = firebaseRef.child('todos').push();
+
+            testTodoRef.set({
+                text: 'Something to do',
+                completed: false,
+                createdAt: 23234
+            }).then(() => done());
+        });
+
+        afterEach((done) => {
+            testTodoRef.remove().then(() => done())
+        });
+
+        it('should toggle todo and dispatch UPDATE_TODO action', (done) => {
+            const store = createMockStore({});
+            const action = actions.startToggleTodo(testTodoRef.key, true);
+
+            store.dispatch(action).then(() => {
+                const mockActions = store.getActions();
+
+                expect(mockActions[0]).toInclude({
+                    type: 'UPDATE_TODO',
+                    id: testTodoRef.key
+                });
+
+                expect(mockActions[0].updates).toInclude({
+                    completed: true
+                });
+                //
+                expect(mockActions[0].updates.completedAd).toExist();
+
+                done();
+            }, done)
+        });
+    })
 });
