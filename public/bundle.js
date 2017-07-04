@@ -21680,14 +21680,16 @@
 	            sort = _props.sort;
 
 	        var renderTodos = function renderTodos() {
-	            if (todos.length === 0) {
+	            var filterTodos = TodoAPI.filterSortTodos(todos, showCompleted, searchText, sort);
+
+	            if (filterTodos.length === 0) {
 	                return React.createElement(
 	                    'p',
 	                    { className: 'container__message' },
 	                    'Nothing To Do'
 	                );
 	            }
-	            return TodoAPI.filterSortTodos(todos, showCompleted, searchText, sort).map(function (todo) {
+	            return filterTodos.map(function (todo) {
 	                return React.createElement(_Todo2.default, _extends({ key: todo.id }, todo));
 	            });
 	        };
