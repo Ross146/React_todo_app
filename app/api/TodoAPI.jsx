@@ -1,22 +1,4 @@
 module .exports = {
-    setTodos: function (todos) {
-        if ($.isArray(todos)) {
-            localStorage.setItem('todos', JSON.stringify(todos));
-            return todos;
-        }
-    },
-    getTodos: function () {
-        let stringTodos = localStorage.getItem('todos');
-        let todos = [];
-
-        try {
-            todos = JSON.parse(stringTodos);
-        } catch (e) {
-
-        }
-
-        return $.isArray(todos) ? todos : [];
-    },
     filterSortTodos: function (todos, showCompleted, searchText, sort) {
         let filteredSortedTodos = todos;
 

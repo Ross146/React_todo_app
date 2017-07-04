@@ -11,48 +11,6 @@ describe('TodoAPI', () => {
         expect(TodoAPI).toExist()
     });
 
-    describe('setTodos', () => {
-        it('should set valid todos array', () => {
-            let todos = [{
-                id: 21,
-                text: 'test text',
-                completed: false
-            }];
-            TodoAPI.setTodos(todos);
-
-            let actualTodos = JSON.parse(localStorage.getItem('todos'));
-
-            expect(actualTodos).toEqual(todos);
-        });
-
-        it('should not set valid todos array', () => {
-            let badTodos = {a: 'b'};
-            TodoAPI.setTodos(badTodos);
-
-            expect(localStorage.getItem('todos')).toBe(null)
-        });
-    });
-
-    describe('getTodos', () => {
-        it('should return empty array for bad localstorage data', () => {
-            let actualTodos = TodoAPI.getTodos();
-            expect(actualTodos).toEqual([]);
-        });
-
-        it('should get valid todos array', () => {
-            let todos = [{
-                id: 21,
-                text: 'test text',
-                completed: false
-            }];
-            localStorage.setItem('todos', JSON.stringify(todos));
-
-            let actualTodos = TodoAPI.getTodos('todos');
-
-            expect(actualTodos).toEqual(todos);
-        });
-    });
-
     describe('filterSortTodos', () => {
         let todos = [{
             id: 1,

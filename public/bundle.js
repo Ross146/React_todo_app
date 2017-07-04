@@ -105,14 +105,7 @@
 	var store = __webpack_require__(310).configure();
 	var TodoAPI = __webpack_require__(307);
 
-	store.subscribe(function () {
-	    var state = store.getState();
-	    console.log('New state', state);
-	    TodoAPI.setTodos(state.todos);
-	});
-
-	var initialTodos = TodoAPI.getTodos();
-	store.dispatch(actions.addTodos(initialTodos));
+	store.dispatch(actions.startAddTodos());
 
 	//load foundation
 	$(document).foundation();
@@ -21739,7 +21732,6 @@
 	            completedAt = _props.completedAt,
 	            dispatch = _props.dispatch;
 
-	        console.log(this.props);
 	        var todoClassName = completed ? 'todo todo-completed' : 'todo';
 	        var renderDate = function renderDate() {
 	            var message = 'Created ';
@@ -34895,7 +34887,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.startToggleTodo = exports.updateTodo = exports.toggleShowCompleted = exports.addTodos = exports.startAddTodo = exports.addTodo = exports.changeSort = exports.setSearchText = undefined;
+	exports.startToggleTodo = exports.updateTodo = exports.toggleShowCompleted = exports.startAddTodos = exports.addTodos = exports.startAddTodo = exports.addTodo = exports.changeSort = exports.setSearchText = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -34954,6 +34946,23 @@
 	    return {
 	        type: 'ADD_TODOS',
 	        todos: todos
+	    };
+	};
+
+	var startAddTodos = exports.startAddTodos = function startAddTodos() {
+	    return function (dispatch, getState) {
+	        return _firebase.firebaseRef.child('todos').once('value').then(function (database) {
+	            var databaseVal = database.val() || {};
+	            var keys = Object.keys(databaseVal);
+	            var todosArray = [];
+
+	            for (var i = 0; i < keys.length; i++) {
+	                todosArray.push(_extends({
+	                    id: keys[i]
+	                }, databaseVal[keys[i]]));
+	            }
+	            dispatch(addTodos(todosArray));
+	        });
 	    };
 	};
 
@@ -35697,25 +35706,9 @@
 /* 307 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	module.exports = {
-	    setTodos: function setTodos(todos) {
-	        if ($.isArray(todos)) {
-	            localStorage.setItem('todos', JSON.stringify(todos));
-	            return todos;
-	        }
-	    },
-	    getTodos: function getTodos() {
-	        var stringTodos = localStorage.getItem('todos');
-	        var todos = [];
-
-	        try {
-	            todos = JSON.parse(stringTodos);
-	        } catch (e) {}
-
-	        return $.isArray(todos) ? todos : [];
-	    },
 	    filterSortTodos: function filterSortTodos(todos, showCompleted, searchText, sort) {
 	        var filteredSortedTodos = todos;
 
